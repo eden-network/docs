@@ -1,0 +1,95 @@
+---
+title: Quick Start
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Eden Relay fully conforms to the most recent [Builder API spec](https://ethereum.github.io/builder-specs/#/Builder). 
+As such, your validator client already supports using Eden Relay out of the box. 
+All that is needed to use Eden Relay for block production are some simple command line flags in your chosen client (see below).
+
+If you would like to connect to other relays in addition to Eden Relay, see our [mev-boost implementation guide](./mev-boost)
+
+-----
+
+## Prysm
+
+To use Eden Relay as your source for block production with Prysm, you simply need to add the following flag to your beacon node client:
+
+<Tabs
+  groupId="network"
+  defaultValue="mainnet"
+  values={[
+    {label: 'Mainnet', value: 'mainnet'},
+    {label: 'Ropsten', value: 'ropsten'},
+    {label: 'Goerli', value: 'goerli'},
+  ]}>
+  <TabItem value="mainnet">
+
+  ```mainnet
+    --http-mev-relay=https://relay.edennetwork.io
+  ```
+
+  </TabItem>
+  <TabItem value="ropsten">
+
+  ```ropsten
+    --http-mev-relay=https://relay-ropsten.edennetwork.io
+  ```
+
+  </TabItem>
+  <TabItem value="goerli">
+
+  ```goerli
+    --http-mev-relay=https://relay-goerli.edennetwork.io
+  ```
+
+  </TabItem>
+</Tabs>
+
+And the following to your validator client:
+```
+--enable-builder
+```
+
+## Lighthouse
+
+To use Eden Relay as your source for block production with Lighthouse, you simply need to add the following flag to your beacon node client:
+<Tabs
+  groupId="network"
+  defaultValue="mainnet"
+  values={[
+    {label: 'Mainnet', value: 'mainnet'},
+    {label: 'Ropsten', value: 'ropsten'},
+    {label: 'Goerli', value: 'goerli'},
+  ]}>
+  <TabItem value="mainnet">
+
+  ```mainnet
+    --builder=https://relay.edennetwork.io
+  ```
+
+  </TabItem>
+  <TabItem value="ropsten">
+
+  ```ropsten
+    --builder=https://relay-ropsten.edennetwork.io
+  ```
+
+  </TabItem>
+  <TabItem value="goerli">
+
+  ```goerli
+    --builder=https://relay-goerli.edennetwork.io
+  ```
+
+  </TabItem>
+</Tabs>
+
+And the following to your validator client:
+```
+--builder-proposals
+```
+
+See official [Lighthouse Documentation](https://lighthouse-book.sigmaprime.io/builders.html) for more details and advanced configuration options.
+
