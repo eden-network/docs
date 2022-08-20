@@ -1,6 +1,8 @@
 # Eden Docs
 
-These docs are built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator. 
+These docs are built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator. They are a work in progress, please file any issues you find on GitHub and/or read our [contribution guide](./docs/contribution-guide.mdx) to submit a PR with your changes.
+
+If you have any questions, feel free to reach out on our [Discord](https://discord.gg/ZhB9mpWWG3).
 
 ## Installation
 
