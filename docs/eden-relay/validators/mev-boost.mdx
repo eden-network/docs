@@ -53,7 +53,7 @@ docker run flashbots/mev-boost -help
 
 ## Usage
 
-A single mev-boost instance can be used by multiple beacon nodes. To connect `mev-boost` to multiple relays, pass the relay URLs as a comma-separated list (no spaces) to the `-relay` flag. 
+A single `mev-boost` instance can be used by multiple beacon nodes. To connect `mev-boost` to multiple relays, pass the relay URLs as a comma-separated list (no spaces) to the `-relay` flag. 
 `mev-boost` will automatically choose the most profitable block from all relays every slot.
 
 <Tabs
@@ -90,10 +90,10 @@ A single mev-boost instance can be used by multiple beacon nodes. To connect `me
 ## Configure Consensus Client
 ### Prysm
 
-To use Eden Relay as your source for block production with Prysm + `mev-boost`, you simply need to add the following flag to your beacon node client to point it at your newly running mev-boost instance:
+To use Eden Relay as your source for block production with Prysm + `mev-boost`, you simply need to add the following flag to your beacon node client to point it at your newly running `mev-boost` instance:
 
 ```mainnet
-  --http-mev-relay=http://localhost:18550
+--http-mev-relay=http://localhost:18550
 ```
 
 And the following to your validator client:
@@ -103,9 +103,9 @@ And the following to your validator client:
 
 ### Lighthouse
 
-To use Eden Relay as your source for block production with Lighthouse + `mev-boost`, you simply need to add the following flag to your beacon node client to point it at your newly running mev-boost instance:
+To use Eden Relay as your source for block production with Lighthouse + `mev-boost`, you simply need to add the following flag to your beacon node client to point it at your newly running `mev-boost` instance:
 ```
-  --builder=http://localhost:18550
+--builder=http://localhost:18550
 ```
 
 And the following to your validator client:
