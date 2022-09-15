@@ -48,7 +48,8 @@ module.exports = {
       "Contribute": [
         'contribution-guide', 'cheatsheet',
       ],
-    },
+    }, 
+    'terms-of-service',
     {
       type: 'link',
       label: 'Discord',
