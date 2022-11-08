@@ -107,3 +107,42 @@ And the following to your validator client:
 
 See official [Lighthouse Documentation](https://lighthouse-book.sigmaprime.io/builders.html) for more details and advanced configuration options.
 
+### Teku
+
+To use Eden Relay as your source for block production with Teku + `mev-boost` where your beacon node and validator are run in the same process, you simply need to add the following flags to your client to point it at your newly running `mev-boost` instance:
+```
+--validators-builder-registration-default-enabled=true 
+--builder-endpoint=http://localhost:18550
+```
+
+If you are running a Teku + `mev-boost` setup where your beacon node and validator are run in different processes, your setup should look like the following:
+
+#### Validator client:
+```
+teku validator-client --validators-proposer-blinded-blocks-enabled=true --validators-proposer-config="/etc/teku/proposerConfig.json"
+```
+
+#### Proposer configuration:
+```
+{
+  "proposer_config": {
+    "0xa057816155ad77931185101128655c0191bd0214c201ca48ed887f6c4c6adf334070efcd75140eada5ac83a92506dd7a": {
+      "fee_recipient": "0x50155530FCE8a85ec7055A5F8b2bE214B3DaeFd3",
+    }
+  },
+  "default_config": {
+    "fee_recipient": "0x6e35733c5af9B61374A128e6F85f553aF09ff89A",
+    "builder": {
+      "enabled": true
+    }
+  }
+}
+```
+
+#### Beacon node:
+```
+teku --validators-proposer-default-fee-recipient="0x6e35733c5af9B61374A128e6F85f553aF09ff89A" --ee-endpoint="http://127.0.0.1:8551" --ee-jwt-secret-file="/etc/jwt-secret.hex" --builder-endpoint="http://localhost:18550"
+```
+
+See official [Teku Documentation](https://docs.teku.consensys.net/en/latest/HowTo/Builder-Network/) for more details and advanced configuration options.
+
