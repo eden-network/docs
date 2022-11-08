@@ -44,7 +44,11 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
         disableSwitch: false,
         respectPrefersColorScheme: false,
       },
-      hideableSidebar: true,
+      docs: {
+        sidebar: {
+          hideable: true,
+        }
+      },
       navbar: {
         title: 'Eden Docs',
         logo: {
