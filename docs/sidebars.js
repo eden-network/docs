@@ -35,6 +35,7 @@ module.exports = {
             {
               "Advanced Concepts": [
                 'eden-bundles/searchers/advanced/understanding-bundles',
+                'eden-bundles/searchers/advanced/bundle-cancellations',
                 'eden-bundles/searchers/advanced/coinbase-payment',
                 'eden-bundles/searchers/advanced/rpc-endpoint',
                 'eden-bundles/searchers/advanced/troubleshooting',
@@ -42,6 +43,12 @@ module.exports = {
             },
           ],
         },
+      ]
+    },
+    {
+      'Eden Bundler (ERC-4337)': [
+        'eden-bundler/overview',
+        'eden-bundler/erc4337-overview'
       ]
     },
     {
