@@ -1,5 +1,5 @@
 ---
-title: RPC endpoint
+title: RPC Endpoint
 ---
 
 import Tabs from "@theme/Tabs";
@@ -11,7 +11,9 @@ For advanced users, you can interact with the relay's RPC endpoint at `https://a
 
 ### eth_sendBundle
 
-`eth_sendBundle` can be used to send your bundles to the relay. The `eth_sendBundle` RPC has the following payload format:
+`eth_sendBundle` can be used to send your bundles to Eden builders. The `eth_sendBundle` RPC has the following payload format:
+
+> :information_source: To make your bundle cancellable, you must pass `replacementUuid` when first submitting the bundle. Calling this method subsequent times with the same UUID will replace the original bundle. See [Bundle Cancellations](/eden-bundles/searchers/advanced/bundle-cancellations) for more information.
 
 ```json
 {
@@ -25,6 +27,7 @@ For advanced users, you can interact with the relay's RPC endpoint at `https://a
       minTimestamp,      // (Optional) Number, the minimum timestamp for which this bundle is valid, in seconds since the unix epoch
       maxTimestamp,      // (Optional) Number, the maximum timestamp for which this bundle is valid, in seconds since the unix epoch
       revertingTxHashes, // (Optional) Array[String], A list of tx hashes that are allowed to revert
+      replacementUuid,   // (Optional) String, UUID that can be used to cancel/replace this bundle
     }
   ]
 }
@@ -57,6 +60,26 @@ example response:
   "result": {
     "bundleHash": "0x2228f5d8954ce31dc1601a8ba264dbd401bf1428388ce88238932815c5d6f23f"
   }
+}
+```
+
+### eth_cancelBundle
+
+`eth_cancelBundle` is used to prevent a submitted bundle from being included on-chain. 
+See [Bundle Cancellations](/eden-bundles/searchers/advanced/bundle-cancellations) for more information.
+
+> :information_source: `replacementUuid` must have been set when bundle was submitted.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "eth_cancelBundle",
+  "params": [
+    {
+      replacementUuid, // UUIDv4 to uniquely identify submission
+    }
+  ]
 }
 ```
 
