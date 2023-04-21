@@ -45,6 +45,12 @@ module.exports = {
       ]
     },
     {
+      'Eden Bundler (ERC-4337)': [
+        'eden-bundler/overview',
+        'eden-bundler/erc4337-overview'
+      ]
+    },
+    {
       "Contribute": [
         'contribution-guide', 'cheatsheet',
       ],
