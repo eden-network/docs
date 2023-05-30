@@ -23,3 +23,71 @@
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
 }
+
+.overlay {
+  position: fixed;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.modal {
+  width: 100%;
+  max-width: 420px;
+  padding: 3rem;
+  background: var(--ifm-background-surface-color);
+  border-radius: 1rem;
+  position: relative;
+  color: var(--ifm-color-content-secondary);
+  z-index: 10;
+}
+
+.modal p {
+  margin: 0;
+}
+
+.modal__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  cursor: pointer;
+  border-radius: 100%;
+  border: 0;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--ifm-color-primary);
+  font-weight: bold;
+  color: #fff;
+}
+
+.modal__close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.rpcBtn {
+  background: linear-gradient(90deg, #0cd479 0, #caff00 100%);
+  border-radius: 6px;
+  border: none;
+  padding: 6px 24px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #171c47;
+  cursor: pointer;
+}
+
+.rpcBtn:hover {
+  background: #171c47;
+  color: #fff;
+}
