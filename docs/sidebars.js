@@ -6,7 +6,6 @@ module.exports = {
         'eden-rpc/overview',
         'eden-rpc/quick-start',
         'eden-rpc/rocket-rpc',
-        'eden-rpc/speed-rpc',
         {
           "More Information": [
             'eden-rpc/more-information/uncle-bandits',
