@@ -28,5 +28,3 @@ To add Speed RPC endpoint follow these steps:
 
 `https://speed-tokyo.edennetwork.io`
 
-
-More regional endpoints may be added in the future.
