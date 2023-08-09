@@ -16,8 +16,17 @@ To add Speed RPC endpoint follow these steps:
 
 ## Speed RPC Locations
 
-http://speed-us-east.edennetwork.io - US East  
-http://speed-eu-west.edennetwork.io - EU West  
-http://speed-tokyo.edennetwork.io - Tokyo  
+### 🇺🇸 US East
+
+`https://speed-us-east.edennetwork.io`
+
+### 🇪🇺 EU West
+
+`https://speed-us-east.edennetwork.io`
+
+### 🇯🇵 Tokyo
+
+`https://speed-us-east.edennetwork.io`
+
 
 More regional endpoints may be added in the future.
