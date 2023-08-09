@@ -2,7 +2,7 @@
 title: Speed RPC
 ---
 
-Eden Speed RPC features multiple RPCs endpoints throughout the world, each of them publicly accessible, meaning that a typical transaction using Eden Speed RPC will be propagated faster than competing RPCs.
+Eden Speed RPC offers endpoints in three major global locations, reducing the distance between transaction origin and RPC location. Users can reduce their first-hop latency and use Eden Network’s speed-optimized global infrastructure for transaction propagation.
 
 
 ## Using Speed RPC
