@@ -16,6 +16,11 @@ module.exports = {
       ],
     },
     {
+      "Eden Mempool Streaming Service": [
+        'eden-mempool-streaming-service/overview'
+      ],
+    },
+    {
       'Eden Relay': [
         'eden-relay/overview',
         'eden-relay/how-it-works',
