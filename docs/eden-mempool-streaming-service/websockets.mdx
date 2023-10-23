@@ -1,0 +1,65 @@
+---
+title: How to Subscribe via WebSockets
+description: This page is a guide to subscribing to Ethereum Mempool transactions using WebSockets.
+---
+
+## Overview
+
+You can connect to the stream using a WebSockets subscription. As new transactions are detected in the mempool, they will be pushed directly to you for you to handle.
+
+1. Connect with a WebSockets library to an endpoint
+2. Send a subscription message
+3. Wait for incoming messages
+4. Handle incoming messages
+
+## Early Access
+
+:::tip Early Access
+The service is currently in alpha.
+
+If you would like access, [join our Discord channel `#mempool-service`](https://discord.gg/98GV73f)
+:::
+
+## Subscription Parameters
+
+`params`: Required:
+
+* Type: `"newTxs" | "rawTxs"`
+
+### Subscribing to Parsed Transactions
+
+Use `newTxs` for parsed results.
+
+```json showLineNumbers
+{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "subscribe",
+    // highlight-next-line
+    "params": ["newTxs"]
+}
+```
+
+### Subscribing to RLP Encoded Transactions
+
+Use `rawTxs` for RLP encoded results.
+
+:::note More about RLP
+You can read more about RLP serialization on [Ethereum's dev docs](https://ethereum.org/en/developers/docs/data-structures-and-encoding/rlp/)
+
+Popular libraries like [viem](https://viem.sh/docs/utilities/fromRlp.html) and [ethers.js](https://docs.ethers.org/v5/api/utils/encoding/#utils.rlpDecode) offer utilities to help handle decoding
+:::
+
+```json showLineNumbers
+{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "subscribe",
+    // highlight-next-line
+    "params": ["rawTxs"]
+}
+```
+
+## What's Next
+
+Once you have subscribed, you will receive new messages containing new transactions. From here, you may want to filter, validate, simulate, bundle, log or otherwise handle those transactions within your application logic.
