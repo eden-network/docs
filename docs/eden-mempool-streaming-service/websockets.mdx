@@ -28,6 +28,8 @@ If you would like access, [join our Discord channel `#mempool-service`](https://
 
 ### Subscribing to Parsed Transactions
 
+#### Subscription
+
 Use `newTxs` for parsed results.
 
 ```json showLineNumbers
@@ -40,15 +42,61 @@ Use `newTxs` for parsed results.
 }
 ```
 
+#### Returns
+
+Returns a typed transaction object per `@ethereumjs/tx`, with support for:
+
+* `FeeMarketEIP1559Transaction` (EIP-1559, gas fee market)
+* `AccessListEIP2930Transaction` (EIP-2930, optional access lists)
+* `BlobEIP4844Transaction` (EIP-4844, blob transactions)
+* `LegacyTransaction`
+
+All return values are provided as hex strings.
+
+```ts showLineNumbers
+type SubscriptionResponse = {
+    jsonrpc: "2.0",
+    method: "subscription",
+    params: {
+        subscription: number,
+        result: ParsedTransaction
+    }
+}
+
+type ParsedTransaction = {
+    nonce: string,
+    gasPrice?: string,
+    gasLimit: string,
+    to: string | null,
+    value: string,
+    data: string,
+    from: string,
+    v: string,
+    r: string,
+    s: string,
+    chainId?: string,
+    type?: string,
+    accessList?: AccessList[],
+    maxPriorityFeePerGas?: string,
+    maxFeePerGas?: string,
+    maxFeePerDataGas?: string,
+    versionedHashes?: string[],
+    kzgCommitments?: string[],
+    blobs?: string[],
+    proofs?: string[]
+}
+
+type AccessList = {
+    address: string,
+    storageKeys: string[]
+}
+```
+
 ### Subscribing to RLP Encoded Transactions
 
+#### Subscription
+
 Use `rawTxs` for RLP encoded results.
-
-:::note More about RLP
-You can read more about RLP serialization on [Ethereum's dev docs](https://ethereum.org/en/developers/docs/data-structures-and-encoding/rlp/)
-
-Popular libraries like [viem](https://viem.sh/docs/utilities/fromRlp.html) and [ethers.js](https://docs.ethers.org/v5/api/utils/encoding/#utils.rlpDecode) offer utilities to help handle decoding
-:::
 
 ```json showLineNumbers
 {
@@ -59,6 +107,27 @@ Popular libraries like [viem](https://viem.sh/docs/utilities/fromRlp.html) and [
     "params": ["rawTxs"]
 }
 ```
+
+#### Returns
+
+```ts showLineNumbers
+type SubscriptionResponse = {
+    jsonrpc: "2.0",
+    method: "subscription",
+    params: {
+        subscription: number,
+        result: {
+            rlp: string
+        }
+    }
+}
+```
+
+:::note More about RLP
+You can read more about RLP serialization on [Ethereum's dev docs](https://ethereum.org/en/developers/docs/data-structures-and-encoding/rlp/)
+
+Popular libraries like [viem](https://viem.sh/docs/utilities/fromRlp.html) and [ethers.js](https://docs.ethers.org/v5/api/utils/encoding/#utils.rlpDecode) offer utilities to help handle decoding
+:::
 
 ## What's Next
 
