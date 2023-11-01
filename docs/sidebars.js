@@ -3,7 +3,7 @@ module.exports = {
     'welcome',
     {
       "Eden RPC": [
-        'eden-rpc/overview',
+        { type: 'doc', id: 'eden-rpc/overview', label: 'Overview'},
         'eden-rpc/quick-start',
         'eden-rpc/rocket-rpc',
         'eden-rpc/speed-rpc',
@@ -23,7 +23,7 @@ module.exports = {
     },
     {
       'Eden Relay': [
-        'eden-relay/overview',
+        { type: 'doc', id: 'eden-relay/overview', label: 'Overview'},
         'eden-relay/how-it-works',
         {
           'For Validators & Validator Pools': [
@@ -35,26 +35,17 @@ module.exports = {
     },
     {
       'Eden Bundles': [
-        'eden-bundles/overview',
-        {
-          "For Searchers": [
-            'eden-bundles/searchers/quick-start',
-            {
-              "Advanced Concepts": [
-                'eden-bundles/searchers/advanced/understanding-bundles',
-                'eden-bundles/searchers/advanced/bundle-cancellations',
-                'eden-bundles/searchers/advanced/coinbase-payment',
-                'eden-bundles/searchers/advanced/rpc-endpoint',
-                'eden-bundles/searchers/advanced/troubleshooting',
-              ],
-            },
-          ],
-        },
+        { type: 'doc', id: 'eden-bundles/overview', label: 'Overview'},
+        { type: 'doc', id: 'eden-bundles/searchers/quick-start', label: 'Quick Start'},
+        { type: 'doc', id: 'eden-bundles/searchers/advanced/bundle-cancellations', label: 'Bundle Cancellations'},
+        { type: 'doc', id: 'eden-bundles/searchers/advanced/coinbase-payment', label: 'Coinbase Payments'},
+        { type: 'doc', id: 'eden-bundles/searchers/advanced/troubleshooting', label: 'Troubleshooting Bundles'},
+        { type: 'doc', id: 'eden-bundles/searchers/advanced/rpc-endpoint', label: 'Technical Specification'},
       ]
     },
     {
       'Eden Bundler (ERC-4337)': [
-        'eden-bundler/overview',
+        { type: 'doc', id: 'eden-bundler/overview', label: 'Overview'},
         'eden-bundler/erc4337-overview'
       ]
     },

@@ -1,5 +1,5 @@
 ---
-title: Overview
+title: Eden RPC
 ---
 
 Eden RPC makes it easy for everyday users and developers to use Eden for frontrunning protection. It's as simple as adding a URL to your MetaMask.
