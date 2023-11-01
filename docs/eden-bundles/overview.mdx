@@ -1,44 +1,84 @@
 ---
-title: Overview
+title: Eden Bundles
+description: Send bundles to Eden's network of block builders using the `eth_sendBundle` RPC.
 ---
 
-Eden supports an `eth_sendBundle` RPC which allows sophisticated Ethereum users called "searchers" to send "bundles" to Eden's network of block builders.
+The Eden RPC supports sending bundles directly to Eden's network of block builders.
 
-Bundles include an array of arbitrary signed Ethereum transactions along with some metadata describing under what conditions these transactions should be included.
+* Endpoint: `https://api.edennetwork.io/v1/bundle`
+* [Technical specification](/eden-bundles/searchers/advanced/rpc-endpoint)
 
-```json
+## Bundle Submission
+
+If you are already familiar with bundle submission, send your bundles to the endpoint above. The endpoint supports:
+
+* Target block, min and max timestamps
+* Reverting transactions
+* [Bundle cancellation](/eden-bundles/searchers/advanced/bundle-cancellations)
+
+```ts showLineNumbers
 {
   "jsonrpc": "2.0",
   "id": 1,
   "method": "eth_sendBundle",
   "params": [
     {
-      txs,               // Array[String], A list of signed transactions to execute in an atomic bundle
-      blockNumber,       // String, a hex encoded block number for which this bundle is valid on
-      minTimestamp,      // (Optional) Number, the minimum timestamp for which this bundle is valid, in seconds since the unix epoch
-      maxTimestamp,      // (Optional) Number, the maximum timestamp for which this bundle is valid, in seconds since the unix epoch
-      revertingTxHashes, // (Optional) Array[String], A list of tx hashes that are allowed to revert
+      txs: string[],                // List of signed transactions to execute in an atomic bundle
+      blockNumber: string,          // Hex encoded block number for which this bundle is valid on
+      minTimestamp?: number,        // (Optional) The minimum timestamp for which this bundle is valid, in seconds since the unix epoch
+      maxTimestamp?: number,        // (Optional) The maximum timestamp for which this bundle is valid, in seconds since the unix epoch
+      revertingTxHashes?: string[], // (Optional) List of tx hashes that are allowed to revert
+      replacementUuid?: string,     // (Optional) UUID that can be used to cancel/replace this bundle
     }
   ]
 }
 ```
 
------
+## About Bundles
 
-### Searchers
-Searchers are Ethereum users who, for whatever reason, prefer to use the Eden private transaction pool over the regular p2p transaction pool. These users monitor the state of the chain and send bundles to relayers.
+Bundles are especially useful for Ethereum users who prefer to bypass the public mempool and optionally bundle multiple transactions together with various inclusion criteria. For example,
 
-Typically, searchers will be one of the following types:
-1. Ethereum bot operators looking for fast, and risk free access to blockspace (for example, arbitrage and liquidation bots)
-2. Ethereum users looking for frontrunning protection on their transactions (for example, Uniswap traders)
-3. Ethereum Dapps with advanced use cases like account abstraction or gasless transactions (for example, tornado.cash and mistX)
+* Searchers looking for fast, and risk free access to blockspace (for example, arbitrage and liquidation bot operators)
+* Users looking for frontrunning protection on their transactions (see also: [Eden RPC](/eden-rpc/overview))
+* Dapps with advanced use cases like account abstraction or gasless transactions (see also: [Eden Bundler (ERC-4337)](/eden-bundler/overview))
 
-<div style={{textAlign: 'center'}}>
+Transactions submitted as bundles obtain pre-trade "privacy" or "confidentiality" as the transactions are not shared with the public mempool.
 
-![Searcher Architecture](/img/searcher-architecture.png)
+As such, for a bundle to be included, there is a sealed-bid auction for transaction inclusion with bids paid in gas, or [direct eth transfer to the coinbase address](/eden-bundles/searchers/advanced/coinbase-payment).
 
-</div>
+:::tip Conditional Payments
+Using direct payments instead of gas price allows users to make payments conditional on their transaction succeeding, thus avoiding having to pay for failed bids.
+:::
 
-By submitting bundles directly to relayers instead of through the p2p network, searchers obtain `Pre-trade privacy` as their transactions cannot be seen by the rest of the network. The searchers express their bids for inclusion through their ethereum transactions as either gas price, or direct eth transfer to the coinbase address. Using direct payments instead of gas price allows users to make payments conditional on their transaction succeeding, thus avoiding having to pay for failed bids.
+## Example Bundle
 
-See the [searcher quick-start guide](/eden-bundles/searchers/quick-start) to learn how to get started.
+Bundles consist of one or more transactions that are executed in the order they are provided.
+
+Consider a searcher who wants to backrun a transaction from the mempool in the next block. They create a `signedBundle` consisting of:
+1. Target tx: `SIGNED_ORACLE_UPDATE_FROM_PENDING_POOL`
+2. Backrun tx: `transaction`
+
+The `signedBundle` is then submitted using the next block as the `targetBlockMumber`.
+
+
+```js showLineNumbers
+const signedBundle = flashbotsProvider.signBundle(
+    [
+      {
+        signedTransaction: SIGNED_ORACLE_UPDATE_FROM_PENDING_POOL // serialized signed transaction hex
+      },
+      {
+        signer: wallet, // ethers signer
+        transaction: transaction // ethers populated transaction object
+      }
+    ])
+const bundleReceipt = await flashbotsProvider.sendRawBundle(
+    signedBundle, // bundle we signed above
+    targetBlockNumber // block number at which this bundle is valid
+  )
+)
+```
+
+## Quick Start Guide
+
+[Quick Start Guide for Searchers](/eden-bundles/searchers/quick-start)

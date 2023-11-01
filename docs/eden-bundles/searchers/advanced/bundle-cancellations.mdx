@@ -1,15 +1,16 @@
 ---
 title: Bundle Cancellations
+description: Learn how to replace and cancel bundles
 ---
 
-Eden now supports replacing and cancelling bundles by passing a standard [UUIDv4](https://www.ietf.org/rfc/rfc4122.txt) identifier as an optional parameter with your bundles. 
+Eden supports replacing and cancelling bundles by passing a standard [UUIDv4](https://www.ietf.org/rfc/rfc4122.txt) identifier as an optional parameter with your bundles. 
 To use this feature send your bundles to the same RPC endpoint used for normal bundles: `https://api.edennetwork.io/v1/bundle` using this parameter as described below.
 
-### Understanding bundle cancellations
+### Unique Identifier for Bundles
 
 Bundles can be replaced and canceled using a unique identifier (`replacementUuid`) assigned to a bundle at the time of submission.
 
-```json
+```json showLineNumbers
 {
   "jsonrpc": "2.0",
   "id": 1,
@@ -18,24 +19,28 @@ Bundles can be replaced and canceled using a unique identifier (`replacementUuid
     {
       txs,
       blockNumber,
-      minTimestamp,
-      maxTimestamp,
-      revertingTxHashes,
       replacementUuid, // UUIDv4 to uniquely identify submission
     }
   ]
 }
 ```
 
-### Replacing bundles
+### Replace a Bundle
 
-To replace a bundle, send the new bundle via `eth_sendBundle` with the same `replacementUuid` as the bundle you want to replace.
+Submit your new replacement bundle with the same `replacementUuid` value in order to replace a bundle.
 
-### Canceling bundles
+* Use the same method `eth_sendBundle`.
+* Use the same value for `replacementUuid` as the original bundle you wish to replace.
 
-Canceling a bundle will prevent Eden builders from including it on-chain. To cancel a bundle, call the [`eth_cancelBundle`](/eden-bundles/searchers/advanced/rpc-endpoint#eth_cancelbundle) endpoint, or use the `cancelBundle` function in your preferred [Flashbots library](https://docs.flashbots.net/flashbots-auction/searchers/libraries/ethers-js-provider).
+Your original bundle MUST have been sent with a `replacementUuid` specified.
 
-```json
+### Cancel a Bundles
+
+Call the method [`eth_cancelBundle`](/eden-bundles/searchers/advanced/rpc-endpoint#eth_cancelbundle) in order to cancel a bundle. Or use the `cancelBundle` function in your preferred [Flashbots library](https://docs.flashbots.net/flashbots-auction/searchers/libraries/ethers-js-provider).
+
+Your bundle MUST have been sent with a `replacementUuid` specified.
+
+```json showLineNumbers
 {
   "jsonrpc": "2.0",
   "id": 1,
