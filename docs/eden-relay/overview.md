@@ -1,20 +1,20 @@
 ---
-title: Overview
+title: Eden Relay
+description: Eden Relay connects Ethereum validators and block builders
 ---
 
 Eden Relay is a suite of tools that connect validators to a network of block builders in order to maximize validator yield.  Block builders constantly compete to find the most profitable blocks to deliver to validators. 
 
-Getting started couldn't be easier.
-
------
+## Getting Started
 
 ### For Validators
-The easiest way to get started maximizing your yield as a validator/validator pool through the Eden Network is to read our [quick start guide here](./validators/quick-start)
 
-### For Builders
-If you'd like to apply to be a block builder on Eden Network, please visit our #block-builders channel in [Discord](https://discord.gg/ZhB9mpWWG3).
+Connect to Eden Relay and maximize your yield as a validator or validator pool using our [Quick Start Guide](./validators/quick-start).
 
-Be sure to drop a message telling us a bit about yourself and why you think you would be a great addition to the network as a block builder.
+### For Block Builders
 
-### How It Works
-For an overview of how the Eden Relay ecosystem works you can [read more here](./how-it-works)
+Apply to be a block builder on Eden Network in our [Discord channel `#block-builders`](https://discord.gg/ZhB9mpWWG3).
+
+## How It Works
+
+For an more information about how the Eden Relay ecosystem works you can [read more here](./how-it-works)

@@ -1,19 +1,21 @@
 ---
-title: Bundle Inclusion Troubleshooting
+title: Troubleshooting Bundles
+description: How to troubleshoot your bundle not landing on-chain
 ---
 
-## How to troubleshoot your Eden bundle not landing on-chain
+## Help! Why didn't my bundle land on-chain?
 
-Unlike broadcasting a transaction which lands on-chain (even if the transaction fails), troubleshooting Eden bundles is considerably more challenging, since any of the following circumstances will prevent your bundle from landing on chain:
-```
+Unlike broadcasting a transaction which lands on-chain even if the transaction fails, troubleshooting bundles is considerably more challenging, since any of the following circumstances will prevent your bundle from landing on chain:
+
 1. Transaction failure (ANY within the bundle)
 2. Incentives (gas price + coinbase transfers) not high enough to offset value of block space
 3. Competitors paying more for same opportunity
 4. Bundle received too late to appear in target block
 5. A validator for target block not using Eden Relay for their blocks
-```
 
-While you might normally rely on [Etherscan](https://etherscan.io) to investigate how your transaction executed, landed on-chain, and compared to competitors, that won't work with Eden, a system that keeps your [losing] transactions from hitting the chain. As a part of debugging we _strongly_ recommend that you simulate your transactions, log the output, as well as keep a record of all the data you submit including your entire bundle and its signed transactions.
+While you might normally rely on a block explorer to investigate how your transaction executed, landed on-chain, and compared to competitors, that won't necessarily work with bundles, which prevent losing transactions from being executed on-chain.
+
+As a part of debugging we _strongly_ recommend that you simulate your transactions, log the output, as well as keep a record of all the data you submit including your entire bundle and its signed transactions.
 
 ## Does your transaction work and pay enough?
 Covers:
@@ -22,28 +24,36 @@ Covers:
 2. Incentives (gas price/coinbase transfers) not high enough to offset value of block space
 ```
 
-These two issues are lumped together since their cause, investigation, and resolutions are very similar. Eden will not include a bundle with
-1. A reverting transaction (unless specified via [optional argument revertingTxHashes](/eden-bundles/searchers/advanced/rpc-endpoint#eth_sendbundle) or uncle'd)
+These two issues are lumped together since their cause, investigation, and resolutions are very similar.
+
+Eden will _not_ include a bundle with
+1. A reverting transaction (unless specified via [optional argument `revertingTxHashes`](/eden-bundles/searchers/advanced/rpc-endpoint#eth_sendbundle) or uncle'd)
 2. Gas price below base fee (would create an invalid block if included)
 3. Effective priority fee not high enough to offset opportunity cost of using that block space for other unrelated transactions _(e.g. your bundle is paying 1 Gwei priority fee, while the cheapest transaction in the block is paying 2 Gwei, it is in the miner's best interest to discard your bundle in favor of standard pending transactions)_
 
-As any of these conditions result in your bundle not appearing in a block, troubleshooting these issues requires `simulation` using `eth_callBundle` RPC call. `eth_callBundle` is similar to an `eth_call` you might already be familiar with, but offers these key benefits:
-1. Operates on an array of *signed* transactions, instead of a single [unsigned] transaction description. These transactions are executed in sequence starting at the top of the specified block. Simulating with signed transactions leaves very little difference between how your system creates transactions and how they will be processed on-chain (e.g. you can never use an incorrect `from` field when simulating a signed transaction)
+As any of these conditions result in your bundle not appearing in a block, troubleshooting these issues requires simulation using the `eth_callBundle` RPC call.
+
+### Bundle Simulation
+
+`eth_callBundle` is similar to an `eth_call` you might already be familiar with, but offers these key benefits:
+1. Operates on an array of *signed* transactions, instead of a single _unsigned_ transaction description. These transactions are executed in sequence starting at the top of the specified block. Simulating with signed transactions leaves very little difference between how your system creates transactions and how they will be processed on-chain (e.g. you can never use an incorrect `from` field when simulating a signed transaction)
 2. Returns gas used and coinbase transfer, per transaction. (Coinbase transfer factors into effective gas price)
 3. Allows specifying the exact values for the following values, allowing more accurate simulation:
    - State block number (what values are read from SLOADs)
    - EVM block number (what value is returned from `block.number`)
    - EVM timestamp (what value is returned from `block.timestamp`)
 
-Flashbots ethers.js provider exposes `eth_callBundle` via the [simulate() method](https://github.com/flashbots/ethers-provider-flashbots-bundle#simulate-and-send). This only operates on a pre-signed bundle, so you must sign your bundle transactions manually.
-```
+#### Using Ethers.js
+
+Flashbots ethers.js provider exposes `eth_callBundle` via the [`simulate()` method](https://github.com/flashbots/ethers-provider-flashbots-bundle#simulate-and-send). This only operates on a pre-signed bundle, so you must sign your bundle transactions manually.
+```js showLineNumbers
   const signedTransactions = await flashbotsProvider.signBundle(transactionBundle)
   const simulation = await flashbotsProvider.simulate(signedTransactions, targetBlockNumber, targetBlockNumber + 1)
   console.log(JSON.stringify(simulation, null, 2))
 ```
 
 Output:
-```
+```json showLineNumbers
 {
   "totalGasUsed": 98564,
   "bundleHash": "0x9a6a9fa038343fe3c57260fb7bdb2c79ebadb3088656300d8a494123ebda6d85",
@@ -66,7 +76,7 @@ Output:
 }
 ```
 
-To resolve, ensure the response from eth_callBundle does not revert and matches your expectations for bundle profitability. Compare your bundle's effective gas price against the profit of the conflicting bundle.
+To resolve, ensure the response from `eth_callBundle` does not revert and matches your expectations for bundle profitability. Compare your bundle's effective gas price against the profit of the conflicting bundle.
 
 ## Is you bundle paying enough to be competitive?
 Covers:
@@ -74,7 +84,7 @@ Covers:
 3. Competitors paying more
 ```
 
-[Eden bundles adhere to a "blind" auction](/eden-bundles/overview), where bundle pricing is not released by Eden prior to landing in a block. Only after the block containing winning bundles is propagated the winning "bids" are revealed (via the transactions themselves and blocks-api for recognizing which set of transactions belong to a bundle).
+Eden bundles adhere to a "blind" auction, where bundle pricing is not released by Eden prior to landing in a block. Only after the block containing winning bundles is propagated the winning "bids" are revealed (via the transactions themselves and blocks-api for recognizing which set of transactions belong to a bundle).
 
 While you cannot see a competitor's bid in real time, it is possible to look AFTER the fact to:
 1. Identify the exact bundle (if any) that conflicted with yours
@@ -91,7 +101,7 @@ A conflict occurs when a bundle simulates one way at the top of the block, and a
 2. **Revert** - The target bundle has no reverting transactions when simulated at the top of the block, but reverts when placed after a conflicting bundle that appears first
 3. **Effective Priority Fee** - A bundle cannot significantly reduce its priority fee between simulating at the top of the block and when it is selected for inclusion. This commonly occurs when a bundle is operating on an arbitrage for which it pays a % of the profit to the miner, with an earlier bundle taking part, but not all, of the arbitrage opportunity.
 
-### Detecting
+### Detecting Conflicts
 If a block you targeted contained Eden bundles, but yours did not appear, the next step is to determine which bundles conflicted with yours and, if present, calculate their `effective priority fee`. This can be accomplished through several iterations of simulations, using this strategy:
 
 1. Simulate your bundle at the head of the target block, note its revert states and `effective priority fee`
@@ -101,9 +111,11 @@ If a block you targeted contained Eden bundles, but yours did not appear, the ne
 5. Simulate [bundle1 + bundle2 + ...bundleN + your bundle] as a single bundle, see the behavior of your bundle
 6. And so on...
 
-Using this method, we can identify the conflicting bundle that caused your target bundle to change behavior. The `Eden ethers.js provider` has a built-in helper function for running this strategy called `getConflictingBundle()`:
+#### Using Ethers.js
 
-```
+Using this method, we can identify the conflicting bundle that caused your target bundle to change behavior. The Flashbots ethers.js provider has a built-in helper function for running this strategy called `getConflictingBundle()`:
+
+```js showLineNumbers
 const signedTransactions = await flashbotsProvider.signBundle(transactionBundle)
 console.log(await flashbotsProvider.getConflictingBundle(
       signedTransactions,
@@ -112,7 +124,7 @@ console.log(await flashbotsProvider.getConflictingBundle(
 ```
 
 Output:
-```
+```json showLineNumbers
 {
   "conflictType": FlashbotsBundleConflictType.NonceCollision,
   "initialSimulation": {
@@ -178,9 +190,11 @@ All this must occur prior to the targeted block being mined. If you are targetin
 
 Keep in mind there is a period of time, for every block, when your local perspective of block height is `X`, while `X+1` has already been found and propagated to part of the network, without reaching your local node yet. During this period of partial propagation, submitting a bundle targeting `X+1`, while seemingly valid from your perspective of the network, is futile as miners have already begun work on solving X+2. This is the most extreme case, but the same logic also holds true of targeting `X+1` moments BEFORE it is found as steps 1 through 5 all take time (on the order of about 1-2 seconds).
 
+#### Using ethers.js
+
 To see how much time elapsed between your bundle being submitted to relay, forwarded to miners, and the next block being found, Flashbots offers an RPC endpoint `eth_getBundleStats` which will return timing to you, based on a previously-submitted bundle. All submitted bundles have a bundleHash [which is easy to calculate](https://github.com/flashbots/ethers-provider-flashbots-bundle/blob/0d404bb041b82c12789bd62b18e218304a095b6f/src/index.ts#L266-L269) and target block number which uniquely identify them for later retrieval.
 
-```
+```js showLineNumbers
 console.log(
   await flashbotsProvider.getBundleStats("0x123456789abcdef123456789abcdef123456789abcdef123456789abcdef1234", 13509887)
   )
@@ -188,7 +202,7 @@ console.log(
 ```
 
 Output:
-```
+```json showLineNumbers
 {
   "isSimulated": true,
   "isSentToMiners": true,

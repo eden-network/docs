@@ -1,5 +1,6 @@
 ---
 title: Quick Start
+description: This quickstart guide contains all the information necessary to get up and running as a searcher on Eden.
 ---
 
 import Tabs from "@theme/Tabs";
@@ -35,7 +36,7 @@ Second, you'll need a way to interact with Eden. Eden runs a relay you will send
 >
 <TabItem value="ethers.js">
 
-```ts
+```ts showLineNumbers
 const ethers = require("ethers.js");
 const {
   FlashbotsBundleProvider,
@@ -61,7 +62,7 @@ const flashbotsProvider = await FlashbotsBundleProvider.create(
 </TabItem>
 <TabItem value="web3.py">
 
-```python
+```python showLineNumbers
 import os
 
 from eth_account.account import Account
@@ -84,7 +85,7 @@ flashbot(w3, ETH_ACCOUNT_SIGNATURE)
 </TabItem>
 <TabItem value="go">
 
-```go
+```go showLineNumbers
 package main
 
 import (
@@ -154,7 +155,7 @@ func main() {
 
 Now that we have a private key to identify ourselves with and a bundle provider we can create and send a bundle. Here's an example in node.js
 
-```js
+```js showLineNumbers
 const ethers = require("ethers.js");
 const {
   FlashbotsBundleProvider,
@@ -186,6 +187,11 @@ const bundleReceipt = await flashbotsProvider.sendRawBundle(
 
 That's it!
 
-### Next steps
+### What's Next
 
 Congrats! You should now have everything you need to start sending transactions to the Eden Network.
+
+Keep reading about:
+* [Bundle Cancellations](/eden-bundles/searchers/advanced/bundle-cancellations)
+* [Coinbase Payments](/eden-bundles/searchers/advanced/coinbase-payment)
+* [Troubleshooting Bundles](/eden-bundles/searchers/advanced/troubleshooting)
