@@ -24,13 +24,9 @@ module.exports = {
     {
       'Eden Relay': [
         { type: 'doc', id: 'eden-relay/overview', label: 'Overview'},
+        { type: 'doc', id: 'eden-relay/validators/mev-boost', label: 'Connect using MEV-Boost'},
+        { type: 'doc', id: 'eden-relay/validators/quick-start', label: 'Connect using Builder API'},
         'eden-relay/how-it-works',
-        {
-          'For Validators & Validator Pools': [
-            'eden-relay/validators/quick-start',
-            'eden-relay/validators/mev-boost',
-          ]
-        }
       ]
     },
     {
