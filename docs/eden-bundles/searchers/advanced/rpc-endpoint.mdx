@@ -5,9 +5,10 @@ title: Techical Specification
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-## Endpoint
+## Endpoints
 
-`https://api.edennetwork.io/v1/bundle`
+* Ethereum Mainnet: `https://api.edennetwork.io/v1/bundle`
+* Goerli Testnet: `https://goerli.edennetwork.io/v1/bundle`
 
 ## Authentication
 
@@ -31,7 +32,7 @@ The signature is calculated by taking the [EIP-191](https://eips.ethereum.org/EI
 >
 <TabItem value="ethers.js">
 
-```ts
+```ts showLineNumbers
 import { Wallet, utils } from "ethers";
 
 const privateKey = "0x1234";
@@ -44,7 +45,7 @@ const signature = wallet.address + ":" + wallet.signMessage(utils.id(body));
 </TabItem>
 <TabItem value="web3.py">
 
-```py
+```py showLineNumbers
 from web3 import Web3
 from eth_account import Account, messages
 
@@ -56,7 +57,7 @@ signature = Account.from_key(private_key).address + ':' + Account.sign_message(m
 </TabItem>
 <TabItem value="go">
 
-```go
+```go showLineNumbers
 body := `{"jsonrpc":"2.0","method":"eth_sendBundle","params":[{...}],"id":1}`
 hashedBody := crypto.Keccak256Hash([]byte(body)).Hex()
 sig, err := crypto.Sign(accounts.TextHash([]byte(hashedBody)), privKey)
@@ -172,7 +173,7 @@ The `eth_callBundle` RPC has the following payload format:
 
 #### Example Request
 
-```json
+```json showLineNumbers
 {
   "jsonrpc": "2.0",
   "id": 1,
@@ -190,7 +191,7 @@ The `eth_callBundle` RPC has the following payload format:
 
 #### Example Response
 
-```json
+```json showLineNumbers
 {
   "jsonrpc": "2.0",
   "id": "123",
