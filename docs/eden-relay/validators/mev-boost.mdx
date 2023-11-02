@@ -1,5 +1,5 @@
 ---
-title: Mev-Boost
+title: How to Connect to Eden Relay using MEV-Boost
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -7,9 +7,18 @@ import TabItem from '@theme/TabItem';
 `mev-boost` is an optional add-on for validators to enable them to source blocks from multiple different relays. 
 Configuring `mev-boost` is likely to increase both the profitability and reliability of your validator operation.  
 
-It is the recommended method for connecting to Eden Relay.
+:::tip Recommended
 
------
+MEV-Boost is the recommended way to connect to the Eden Relay. This method enables you to connect to additional relays and helps mitigate risk.
+
+:::
+
+## Overview
+
+1. Install and run `mev-boost`
+2. Add Eden Relay using a command-line flag
+3. Configure your consensus client to enable your `mev-boost` instance as a builder
+
 ## Spec
 
 `mev-boost` implements the latest [Builder Specification](https://github.com/ethereum/builder-specs).
@@ -18,11 +27,13 @@ It is the recommended method for connecting to Eden Relay.
 
 `mev-boost` can run in any machine, as long as it is reachable by the beacon client. The default port is 18550. The most common setup is to install it in the same machine as the beacon client.
 
+A single `mev-boost` instance can be used by multiple beacon nodes.
+
 ### Dependencies
 
 - [Go 1.18+](https://go.dev/doc/install)
 
-### From source
+### From Source
 
 Install mev-boost with `go install`:
 
@@ -39,7 +50,7 @@ cd mev-boost
 make build
 ```
 
-### From Docker image
+### From Docker Image
 
 There is a public mev-boost Docker image at https://hub.docker.com/r/flashbots/mev-boost
 
@@ -51,10 +62,9 @@ docker pull flashbots/mev-boost:latest
 docker run flashbots/mev-boost -help
 ```
 
-## Usage
+## Add Eden Relay URL
 
-A single `mev-boost` instance can be used by multiple beacon nodes. To connect `mev-boost` to multiple relays, pass the relay URLs as a comma-separated list (no spaces) to the `-relay` flag. 
-`mev-boost` will automatically choose the most profitable block from all relays every slot.
+Once you have installed `mev-boost`, you can add Eden Relay and any other relays you wish to use. Pass the relay URLs as a comma-separated list (no spaces) to the `-relays` flag. `mev-boost` will automatically choose the most profitable block from all relays every slot.
 
 <Tabs
   groupId="network"
@@ -79,6 +89,11 @@ A single `mev-boost` instance can be used by multiple beacon nodes. To connect `
   </TabItem>
 </Tabs>
 
+## Relay Info
+
+* Ethereum Mainnet: https://relay.edennetwork.io/info
+* Goerli Testnet: https://goerli.edennetwork.io/info
+
 ## Configure Consensus Client
 ### Prysm
 
@@ -92,6 +107,8 @@ And the following to your validator client:
 ```
 --enable-builder
 ```
+
+See official [Prysm Documentations](https://docs.prylabs.network/docs/advanced/builder#builder-configuration) for more details and advanced configuration options.
 
 ### Lighthouse
 
@@ -123,7 +140,7 @@ teku validator-client --validators-proposer-blinded-blocks-enabled=true --valida
 ```
 
 #### Proposer configuration:
-```
+```json showLineNumbers
 {
   "proposer_config": {
     "0xa057816155ad77931185101128655c0191bd0214c201ca48ed887f6c4c6adf334070efcd75140eada5ac83a92506dd7a": {
@@ -146,3 +163,38 @@ teku --validators-proposer-default-fee-recipient="0x6e35733c5af9B61374A128e6F85f
 
 See official [Teku Documentation](https://docs.teku.consensys.net/en/latest/HowTo/Builder-Network/) for more details and advanced configuration options.
 
+### Lodestar
+
+To use Eden Relay as your source for block production with Lodestar + mev-boost, you simply need to add the following flag to your beacon node client to point it at your newly running mev-boost instance:
+
+#### Beacon node:
+
+```bash
+--builder --builder.urls http://localhost:18550
+```
+
+#### Validator client:
+
+```bash
+--builder --suggestedFeeRecipient <your ethereum address>
+```
+
+See official [Lodestar Documentation](https://chainsafe.github.io/lodestar/usage/mev-integration/#lodestar-and-builder-api) for more details and advanced configuration options.
+
+### Nimbus
+
+To use Eden Relay as your source for block production with Nimbus + mev-boost, you simply need to add the following flag to your beacon node client to point it at your newly running mev-boost instance:
+
+#### Beacon node:
+
+```bash
+./run-mainnet-beacon-node.sh --payload-builder=true --payload-builder-url=http://localhost:18550
+```
+
+#### Validator client:
+
+```bash
+build/nimbus_validator_client --payload-builder=true
+```
+
+See official [Nimbus Documentation](https://nimbus.guide/external-block-builder.html) for more details and advanced configuration options.

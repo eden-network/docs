@@ -3,18 +3,28 @@ title: Eden Relay
 description: Eden Relay connects Ethereum validators and block builders
 ---
 
-Eden Relay is a suite of tools that connect validators to a network of block builders in order to maximize validator yield.  Block builders constantly compete to find the most profitable blocks to deliver to validators. 
+Eden Relay connects Ethereum validators to a network of block builders in order to maximize validator yield.  Block builders constantly compete to find the most profitable blocks to deliver to validators. 
 
-## Getting Started
+The relay is compatible with the MEV-Boost ecosystem and especially useful for:
+* Validators who want to outsource their block production
+* Block Builders who want to submit blocks to validators
 
-### For Validators
+## Relay Info
 
-Connect to Eden Relay and maximize your yield as a validator or validator pool using our [Quick Start Guide](./validators/quick-start).
+* Ethereum Mainnet: https://relay.edennetwork.io/info
+* Goerli Testnet: https://goerli.edennetwork.io/info
 
-### For Block Builders
+## Validator Guides
+
+Connect to Eden Relay and maximize your yield as a validator or validator pool. There are two ways to connect to the Eden Relay:
+
+1. (Recommended) Connect to Eden Relay using MEV-Boost - [Guide](./validators/mev-boost)
+2. (Not Recommended) Connect to Eden Relay using Builder API - [Guide](./validators/quick-start)
+
+## Block Builders
 
 Apply to be a block builder on Eden Network in our [Discord channel `#block-builders`](https://discord.gg/ZhB9mpWWG3).
 
-## How It Works
+## Open Source
 
-For an more information about how the Eden Relay ecosystem works you can [read more here](./how-it-works)
+The Eden Relay codebase is available on [Github](https://github.com/eden-network/mev-boost-relay)
