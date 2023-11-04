@@ -1,5 +1,5 @@
 ---
-title: Quick Start
+title: How to Connect to Eden Relay
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -8,11 +8,21 @@ Eden Relay fully conforms to the most recent [Builder API spec](https://ethereum
 As such, your validator client already supports using Eden Relay out of the box. 
 All that is needed to use Eden Relay for block production are some simple command line flags in your chosen client (see below).
 
-If you would like to connect to other relays in addition to Eden Relay, see our [mev-boost implementation guide](./mev-boost)
+:::warning Not Recommended
 
------
+This is not the recommended way to connect to the Eden Relay.
 
-## Prysm
+You should connect using MEV-Boost instead. See our [mev-boost implementation guide](./mev-boost)
+
+:::
+
+## Relay Info
+
+* Ethereum Mainnet: https://relay.edennetwork.io/info
+* Goerli Testnet: https://goerli.edennetwork.io/info
+
+## Configure Consensus Client
+### Prysm
 
 To use Eden Relay as your source for block production with Prysm, you simply need to add the following flag to your beacon node client:
 
@@ -44,7 +54,7 @@ And the following to your validator client:
 --enable-builder
 ```
 
-## Lighthouse
+### Lighthouse
 
 To use Eden Relay as your source for block production with Lighthouse, you simply need to add the following flag to your beacon node client:
 <Tabs
@@ -77,7 +87,7 @@ And the following to your validator client:
 
 See official [Lighthouse Documentation](https://lighthouse-book.sigmaprime.io/builders.html) for more details and advanced configuration options.
 
-## Teku
+### Teku
 
 To use Eden Relay as your source for block production with Teku where your beacon node and validator are run in the same process, you simply need to add the following flags to your client:
 <Tabs
@@ -113,7 +123,7 @@ teku validator-client --validators-proposer-blinded-blocks-enabled=true --valida
 ```
 
 #### Proposer configuration:
-```
+```json showLineNumbers
 {
   "proposer_config": {
     "0xa057816155ad77931185101128655c0191bd0214c201ca48ed887f6c4c6adf334070efcd75140eada5ac83a92506dd7a": {
@@ -154,3 +164,77 @@ teku validator-client --validators-proposer-blinded-blocks-enabled=true --valida
 </Tabs>
 
 See official [Teku Documentation](https://docs.teku.consensys.net/en/latest/HowTo/Builder-Network/) for more details and advanced configuration options.
+
+### Lodestar
+
+To use Eden Relay as your source for block production with Lodestar, you simply need to add the following flag to your beacon node client:
+
+#### Beacon node:
+
+<Tabs
+  groupId="network"
+  defaultValue="mainnet"
+  values={[
+    {label: 'Mainnet', value: 'mainnet'},
+    {label: 'Goerli', value: 'goerli'},
+  ]}>
+  <TabItem value="mainnet">
+
+  ```bash
+  --builder --builder.urls https://0xb3ee7afcf27f1f1259ac1787876318c6584ee353097a50ed84f51a1f21a323b3736f271a895c7ce918c038e4265918be@relay.edennetwork.io
+  ```
+
+  </TabItem>
+  <TabItem value="goerli">
+
+  ```bash
+  --builder --builder.urls https://0xb1d229d9c21298a87846c7022ebeef277dfc321fe674fa45312e20b5b6c400bfde9383f801848d7837ed5fc449083a12@relay-goerli.edennetwork.io
+  ```
+
+  </TabItem>
+</Tabs>
+
+#### Validator client:
+
+```bash
+--builder --suggestedFeeRecipient <your ethereum address>
+```
+
+See official [Lodestar Documentation](https://chainsafe.github.io/lodestar/usage/mev-integration/#lodestar-and-builder-api) for more details and advanced configuration options.
+
+### Nimbus
+
+To use Eden Relay as your source for block production with Nimbus, you simply need to add the following flag to your beacon node client:
+
+#### Beacon node:
+
+<Tabs
+  groupId="network"
+  defaultValue="mainnet"
+  values={[
+    {label: 'Mainnet', value: 'mainnet'},
+    {label: 'Goerli', value: 'goerli'},
+  ]}>
+  <TabItem value="mainnet">
+
+  ```bash
+  ./run-mainnet-beacon-node.sh --payload-builder=true --payload-builder-url=https://0xb3ee7afcf27f1f1259ac1787876318c6584ee353097a50ed84f51a1f21a323b3736f271a895c7ce918c038e4265918be@relay.edennetwork.io
+  ```
+
+  </TabItem>
+  <TabItem value="goerli">
+
+  ```bash
+  ./run-goerli-beacon-node.sh --payload-builder=true --payload-builder-url=https://0xb1d229d9c21298a87846c7022ebeef277dfc321fe674fa45312e20b5b6c400bfde9383f801848d7837ed5fc449083a12@relay-goerli.edennetwork.io
+  ```
+
+  </TabItem>
+</Tabs>
+
+#### Validator client:
+
+```bash
+build/nimbus_validator_client --payload-builder=true
+```
+
+See official [Nimbus Documentation](https://nimbus.guide/external-block-builder.html) for more details and advanced configuration options.
