@@ -1,7 +1,6 @@
 ---
 title: Quick Start
 ---
-**Please note that Eden RPC is currently in public beta.**
 
 Eden RPC allows regular users to easily protect their transactions from frontrunners by using a custom RPC endpoint in their wallet. Everything should be the same for users, except transactions are sent to Eden, and then directly to Eden block builders, instead of the public mempool.
 
