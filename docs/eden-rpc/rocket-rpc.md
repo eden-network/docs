@@ -6,12 +6,17 @@ Eden Rocket RPC offers a faster experience than Eden RPC which may be better for
 
 The downside is that because your transactions are forwarded to third-parties outside of the Eden ecosystem, Eden cannot guarantee that your transactions won't be frontrun. That said, Eden will only forward your transactions to vetted third-parties that have no known history of frontrunning their users.
 
-## Eden RPC vs Eden Rocket RPC
+## Endpoint
 
-|                       | Frontrunning Protection | Transaction Speed |
+* Ethereum: `https://api.edennetwork.io/v1/rocket`
+
+## RPC Comparison
+
+| RPC                   | Transaction Confidentiality | Inclusion Speed |
 |-----------------------|-------------------------|-------------------|
-| Eden RPC              | Guaranteed ✅           | Fast 🏎           |
-| Eden Rocket RPC       | Best Effort 💪          | Faster 🚀         |
+| Speed RPC             | None (Public)           | Fastest 🏎🏎🏎           |
+| Eden Rocket RPC       | Some (Eden and other repuatable builders) | Fast 🏎 |
+| Eden RPC       | Max (Eden builders only) | Slow 🐢 |
 
 ## Using Eden Rocket RPC
 
