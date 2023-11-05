@@ -2,11 +2,12 @@ module.exports = {
   docs: [
     'welcome',
     {
-      "Eden RPC": [
-        { type: 'doc', id: 'eden-rpc/overview', label: 'Overview'},
-        'eden-rpc/quick-start',
+      "RPC Hub": [
+        { type: 'doc', id: 'eden-rpc/overview', label: 'Eden RPC'},
         'eden-rpc/rocket-rpc',
         'eden-rpc/speed-rpc',
+        { type: 'doc', id: 'eden-rpc/rpc-speed-test', label: 'RPC Speed Test'},
+        { type: 'doc', id: 'eden-rpc/quick-start', label: 'MetaMask Guide'},
         {
           "More Information": [
             'eden-rpc/more-information/uncle-bandits',
@@ -22,15 +23,15 @@ module.exports = {
       ],
     },
     {
-      'Eden Relay': [
-        { type: 'doc', id: 'eden-relay/overview', label: 'Overview'},
+      'MEV-Boost Relay': [
+        { type: 'doc', id: 'eden-relay/overview', label: 'Eden Relay'},
         { type: 'doc', id: 'eden-relay/validators/mev-boost', label: 'Connect using MEV-Boost'},
         { type: 'doc', id: 'eden-relay/validators/quick-start', label: 'Connect using Builder API'},
         'eden-relay/how-it-works',
       ]
     },
     {
-      'Eden Bundles': [
+      'MEV Bundles': [
         { type: 'doc', id: 'eden-bundles/overview', label: 'Overview'},
         { type: 'doc', id: 'eden-bundles/searchers/quick-start', label: 'Quick Start'},
         { type: 'doc', id: 'eden-bundles/searchers/advanced/bundle-cancellations', label: 'Bundle Cancellations'},
@@ -40,8 +41,8 @@ module.exports = {
       ]
     },
     {
-      'Eden Bundler (ERC-4337)': [
-        { type: 'doc', id: 'eden-bundler/overview', label: 'Overview'},
+      'Account Abstraction': [
+        { type: 'doc', id: 'eden-bundler/overview', label: 'Eden Bundler'},
         'eden-bundler/erc4337-overview'
       ]
     },
