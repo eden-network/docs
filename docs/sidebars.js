@@ -42,6 +42,11 @@ module.exports = {
       ]
     },
     {
+      'Block Builders': [
+        { type: 'doc', id: 'eden-builders/overview', label: 'Overview'},
+      ]
+    },
+    {
       'Account Abstraction': [
         { type: 'doc', id: 'eden-bundler/overview', label: 'Eden Bundler'},
         'eden-bundler/erc4337-overview'

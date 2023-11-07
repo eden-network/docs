@@ -28,3 +28,8 @@ Apply to be a block builder on Eden Network in our [Discord channel `#block-buil
 ## Open Source
 
 The Eden Relay codebase is available on [Github](https://github.com/eden-network/mev-boost-relay)
+
+## Censorship Policy
+
+* [Blacklist](https://etherscan.io/address/0x97044531D0fD5B84438499A49629488105Dc58e6)
+* [0xProtect Github](https://github.com/0xprotect)
