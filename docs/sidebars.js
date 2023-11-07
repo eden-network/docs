@@ -17,9 +17,10 @@ module.exports = {
       ],
     },
     {
-      "Ethereum Mempool Stream": [
-        { type: 'doc', id: 'eden-mempool-streaming-service/overview', label: 'Overview'},
-        'eden-mempool-streaming-service/websockets'
+      "Ethereum Mempool": [
+        { type: 'doc', id: 'eden-mempool-streaming-service/overview', label: 'Streaming Service'},
+        'eden-mempool-streaming-service/websockets',
+        'eden-mempool-streaming-service/demo-app'
       ],
     },
     {
