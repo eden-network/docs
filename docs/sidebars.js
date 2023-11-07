@@ -17,9 +17,10 @@ module.exports = {
       ],
     },
     {
-      "Ethereum Mempool Stream": [
-        { type: 'doc', id: 'eden-mempool-streaming-service/overview', label: 'Overview'},
-        'eden-mempool-streaming-service/websockets'
+      "Ethereum Mempool": [
+        { type: 'doc', id: 'eden-mempool-streaming-service/overview', label: 'Streaming Service'},
+        'eden-mempool-streaming-service/websockets',
+        'eden-mempool-streaming-service/demo-app'
       ],
     },
     {
@@ -38,6 +39,11 @@ module.exports = {
         { type: 'doc', id: 'eden-bundles/searchers/advanced/coinbase-payment', label: 'Coinbase Payments'},
         { type: 'doc', id: 'eden-bundles/searchers/advanced/troubleshooting', label: 'Troubleshooting Bundles'},
         { type: 'doc', id: 'eden-bundles/searchers/advanced/rpc-endpoint', label: 'Technical Specification'},
+      ]
+    },
+    {
+      'Block Builders': [
+        { type: 'doc', id: 'eden-builders/overview', label: 'Overview'},
       ]
     },
     {
