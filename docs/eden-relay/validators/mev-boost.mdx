@@ -196,9 +196,36 @@ To use Eden Relay as your source for block production with Nimbus + mev-boost, y
 
 #### Beacon node:
 
-```bash
-./run-mainnet-beacon-node.sh --payload-builder=true --payload-builder-url=http://localhost:18550
-```
+<Tabs
+  groupId="network"
+  defaultValue="mainnet"
+  values={[
+    {label: 'Mainnet', value: 'mainnet'},
+    {label: 'Goerli', value: 'goerli'},
+    {label: 'Holesky', value: 'holesky'},
+  ]}>
+  <TabItem value="mainnet">
+
+  ```bash
+  ./run-mainnet-beacon-node.sh --payload-builder=true --payload-builder-url=http://localhost:18550
+  ```
+
+  </TabItem>
+  <TabItem value="goerli">
+
+  ```bash
+  ./run-goerli-beacon-node.sh --payload-builder=true --payload-builder-url=http://localhost:18550
+  ```
+
+  </TabItem>
+  <TabItem value="holesky">
+
+  ```bash
+  ./run-holesky-beacon-node.sh --payload-builder=true --payload-builder-url=http://localhost:18550
+  ```
+
+  </TabItem>
+</Tabs>
 
 #### Validator client:
 
