@@ -20,6 +20,7 @@ You should connect using MEV-Boost instead. See our [mev-boost implementation gu
 
 * Ethereum Mainnet: https://relay.edennetwork.io/info
 * Goerli Testnet: https://goerli.edennetwork.io/info
+* Holesky Testnet: https://holesky.edennetwork.io/info
 
 ## Configure Consensus Client
 ### Prysm
@@ -32,6 +33,7 @@ To use Eden Relay as your source for block production with Prysm, you simply nee
   values={[
     {label: 'Mainnet', value: 'mainnet'},
     {label: 'Goerli', value: 'goerli'},
+    {label: 'Holesky', value: 'holesky'},
   ]}>
   <TabItem value="mainnet">
 
@@ -44,6 +46,13 @@ To use Eden Relay as your source for block production with Prysm, you simply nee
 
   ```goerli
   --http-mev-relay=https://0xb1d229d9c21298a87846c7022ebeef277dfc321fe674fa45312e20b5b6c400bfde9383f801848d7837ed5fc449083a12@relay-goerli.edennetwork.io
+  ```
+
+  </TabItem>
+  <TabItem value="holesky">
+
+  ```holesky
+  --http-mev-relay=https://0xb1d229d9c21298a87846c7022ebeef277dfc321fe674fa45312e20b5b6c400bfde9383f801848d7837ed5fc449083a12@relay-holesky.edennetwork.io
   ```
 
   </TabItem>
@@ -63,6 +72,7 @@ To use Eden Relay as your source for block production with Lighthouse, you simpl
   values={[
     {label: 'Mainnet', value: 'mainnet'},
     {label: 'Goerli', value: 'goerli'},
+    {label: 'Holesky', value: 'holesky'},
   ]}>
   <TabItem value="mainnet">
 
@@ -75,6 +85,13 @@ To use Eden Relay as your source for block production with Lighthouse, you simpl
 
   ```goerli
   --builder=https://0xb1d229d9c21298a87846c7022ebeef277dfc321fe674fa45312e20b5b6c400bfde9383f801848d7837ed5fc449083a12@relay-goerli.edennetwork.io
+  ```
+
+  </TabItem>
+  <TabItem value="holesky">
+
+  ```holesky
+  --builder=https://0xb1d229d9c21298a87846c7022ebeef277dfc321fe674fa45312e20b5b6c400bfde9383f801848d7837ed5fc449083a12@relay-holesky.edennetwork.io
   ```
 
   </TabItem>
@@ -96,6 +113,7 @@ To use Eden Relay as your source for block production with Teku where your beaco
   values={[
     {label: 'Mainnet', value: 'mainnet'},
     {label: 'Goerli', value: 'goerli'},
+    {label: 'Holesky', value: 'holesky'},
   ]}>
   <TabItem value="mainnet">
 
@@ -110,6 +128,14 @@ To use Eden Relay as your source for block production with Teku where your beaco
   ```goerli
   --validators-builder-registration-default-enabled=true 
   --builder-endpoint=https://0xb1d229d9c21298a87846c7022ebeef277dfc321fe674fa45312e20b5b6c400bfde9383f801848d7837ed5fc449083a12@relay-goerli.edennetwork.io
+  ```
+
+  </TabItem>
+  <TabItem value="holesky">
+
+  ```holesky
+  --validators-builder-registration-default-enabled=true 
+  --builder-endpoint=https://0xb1d229d9c21298a87846c7022ebeef277dfc321fe674fa45312e20b5b6c400bfde9383f801848d7837ed5fc449083a12@relay-holesky.edennetwork.io
   ```
 
   </TabItem>
@@ -146,6 +172,7 @@ teku validator-client --validators-proposer-blinded-blocks-enabled=true --valida
   values={[
     {label: 'Mainnet', value: 'mainnet'},
     {label: 'Goerli', value: 'goerli'},
+    {label: 'Holesky', value: 'holesky'},
   ]}>
   <TabItem value="mainnet">
 
@@ -158,6 +185,13 @@ teku validator-client --validators-proposer-blinded-blocks-enabled=true --valida
 
   ```goerli
   teku --validators-proposer-default-fee-recipient="0x6e35733c5af9B61374A128e6F85f553aF09ff89A" --ee-endpoint="http://127.0.0.1:8551" --ee-jwt-secret-file="/etc/jwt-secret.hex" --builder-endpoint="https://0xb1d229d9c21298a87846c7022ebeef277dfc321fe674fa45312e20b5b6c400bfde9383f801848d7837ed5fc449083a12@relay-goerli.edennetwork.io"
+  ```
+
+  </TabItem>
+  <TabItem value="holesky">
+
+  ```holesky
+  teku --validators-proposer-default-fee-recipient="0x6e35733c5af9B61374A128e6F85f553aF09ff89A" --ee-endpoint="http://127.0.0.1:8551" --ee-jwt-secret-file="/etc/jwt-secret.hex" --builder-endpoint="https://0xb1d229d9c21298a87846c7022ebeef277dfc321fe674fa45312e20b5b6c400bfde9383f801848d7837ed5fc449083a12@relay-holesky.edennetwork.io"
   ```
 
   </TabItem>
@@ -177,6 +211,7 @@ To use Eden Relay as your source for block production with Lodestar, you simply 
   values={[
     {label: 'Mainnet', value: 'mainnet'},
     {label: 'Goerli', value: 'goerli'},
+    {label: 'Holesky', value: 'holesky'},
   ]}>
   <TabItem value="mainnet">
 
@@ -189,6 +224,13 @@ To use Eden Relay as your source for block production with Lodestar, you simply 
 
   ```bash
   --builder --builder.urls https://0xb1d229d9c21298a87846c7022ebeef277dfc321fe674fa45312e20b5b6c400bfde9383f801848d7837ed5fc449083a12@relay-goerli.edennetwork.io
+  ```
+
+  </TabItem>
+  <TabItem value="holesky">
+
+  ```bash
+  --builder --builder.urls https://0xb1d229d9c21298a87846c7022ebeef277dfc321fe674fa45312e20b5b6c400bfde9383f801848d7837ed5fc449083a12@relay-holesky.edennetwork.io
   ```
 
   </TabItem>
@@ -214,6 +256,7 @@ To use Eden Relay as your source for block production with Nimbus, you simply ne
   values={[
     {label: 'Mainnet', value: 'mainnet'},
     {label: 'Goerli', value: 'goerli'},
+    {label: 'Holesky', value: 'holesky'},
   ]}>
   <TabItem value="mainnet">
 
@@ -226,6 +269,13 @@ To use Eden Relay as your source for block production with Nimbus, you simply ne
 
   ```bash
   ./run-goerli-beacon-node.sh --payload-builder=true --payload-builder-url=https://0xb1d229d9c21298a87846c7022ebeef277dfc321fe674fa45312e20b5b6c400bfde9383f801848d7837ed5fc449083a12@relay-goerli.edennetwork.io
+  ```
+
+  </TabItem>
+  <TabItem value="holesky">
+
+  ```bash
+  ./run-holesky-beacon-node.sh --payload-builder=true --payload-builder-url=https://0xb1d229d9c21298a87846c7022ebeef277dfc321fe674fa45312e20b5b6c400bfde9383f801848d7837ed5fc449083a12@relay-holesky.edennetwork.io
   ```
 
   </TabItem>
