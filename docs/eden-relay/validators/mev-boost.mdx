@@ -72,6 +72,7 @@ Once you have installed `mev-boost`, you can add Eden Relay and any other relays
   values={[
     {label: 'Mainnet', value: 'mainnet'},
     {label: 'Goerli', value: 'goerli'},
+    {label: 'Holesky', value: 'holesky'},
   ]}>
   <TabItem value="mainnet">
 
@@ -87,12 +88,20 @@ Once you have installed `mev-boost`, you can add Eden Relay and any other relays
   ```
 
   </TabItem>
+  <TabItem value="holesky">
+
+  ```holesky
+   ./mev-boost -holesky -relay-check -relays https://0xb1d229d9c21298a87846c7022ebeef277dfc321fe674fa45312e20b5b6c400bfde9383f801848d7837ed5fc449083a12@relay-holesky.edennetwork.io
+  ```
+
+  </TabItem>
 </Tabs>
 
 ## Relay Info
 
 * Ethereum Mainnet: https://relay.edennetwork.io/info
 * Goerli Testnet: https://goerli.edennetwork.io/info
+* Holesky Testnet: https://holesky.edennetwork.io/info
 
 ## Configure Consensus Client
 ### Prysm

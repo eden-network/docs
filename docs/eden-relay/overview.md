@@ -13,6 +13,7 @@ The relay is compatible with the MEV-Boost ecosystem and especially useful for:
 
 * Ethereum Mainnet: https://relay.edennetwork.io/info
 * Goerli Testnet: https://goerli.edennetwork.io/info
+* Holesky Testnet: https://holesky.edennetwork.io/info
 
 ## Validator Guides
 
