@@ -1,0 +1,41 @@
+---
+title: Flashbots MEV-Share
+---
+
+## Summary
+
+Historical dataset of MEV-Share transactions collected from Flashbots MEV-Share. MEV-Share is an orderflow auction which blinds certain information from searchers.
+
+## Process
+
+We ETL data from MEV-Share, store and make the data available in BigQuery. Our dataset contains public information provided by the API about the orderflow.
+
+## BigQuery
+
+By making the data available in BigQuery, it can be queried and joined with other public datasets, like the Ethereum Blockchain dataset or simply exported.
+
+* Dataset: `eden-data-public.flashbots`
+* Table: `eden-data-public.flashbots.mev_share`
+* Update frequency: 15 mins
+* Partitioning: Daily
+
+## Example Query
+
+You can get started with the example query below.
+
+```sql
+SELECT *
+FROM `eden-data-public.flashbots.mev_share` 
+WHERE DATE(block_timestamp) = CURRENT_DATE()
+```
+
+:::tip Working with Partioned Tables
+
+You should usually use a WHERE clause on partitioned data to save on query costs. [Learn more](https://cloud.google.com/bigquery/docs/partitioned-tables)
+
+:::
+
+## See Related
+
+* `eden-data-public.flashbots.mempool_dumpster`
+* `eden-data-public.gnosis.mev_blocker`
