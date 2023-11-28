@@ -54,6 +54,7 @@ module.exports = {
         { type: 'doc', id: 'public-data/flashbots/mempool-dumpster', label: 'Flashbots Mempool Dumpster'},
         { type: 'doc', id: 'public-data/flashbots/mev-share', label: 'Flashbots MEV-Share'},
         { type: 'doc', id: 'public-data/gnosis/mev-blocker', label: 'Gnosis MEV Blocker'},
+        { type: 'doc', id: 'public-data/ethereum-auxiliary/tags-pubkey', label: 'Ethereum Tags by Pubkey'},
       ]
     },
     {

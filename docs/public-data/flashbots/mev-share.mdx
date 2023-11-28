@@ -1,5 +1,6 @@
 ---
 title: Flashbots MEV-Share
+description: Public dataset of MEV-Share transactions
 ---
 
 ## Summary
@@ -14,10 +15,16 @@ We ETL data from MEV-Share, store and make the data available in BigQuery. Our d
 
 By making the data available in BigQuery, it can be queried and joined with other public datasets, like the Ethereum Blockchain dataset or simply exported.
 
-* Dataset: `eden-data-public.flashbots`
-* Table: `eden-data-public.flashbots.mev_share`
+* Dataset: `eden-data-public.flashbots` [Open in BigQuery &nearr;](https://console.cloud.google.com/bigquery?p=eden-data-public&d=flashbots&page=dataset)
+* Table: `eden-data-public.flashbots.mev_share` [Open in BigQuery &nearr;](https://console.cloud.google.com/bigquery?p=eden-data-public&d=flashbots&t=mev_share&page=table)
 * Update frequency: 15 mins
 * Partitioning: Daily
+
+:::info BigQuery Access
+
+You need to be logged into your Google Account with a Project selected
+
+:::
 
 ## Example Query
 
@@ -37,5 +44,5 @@ You should usually use a WHERE clause on partitioned data to save on query costs
 
 ## See Related
 
-* `eden-data-public.flashbots.mempool_dumpster`
-* `eden-data-public.gnosis.mev_blocker`
+* [`eden-data-public.flashbots.mempool_dumpster`](./mempool-dumpster)
+* [`eden-data-public.gnosis.mev_blocker`](../gnosis/mev-blocker)

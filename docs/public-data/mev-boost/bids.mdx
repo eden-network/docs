@@ -1,5 +1,6 @@
 ---
 title: MEV-Boost Bids
+description: Public dataset of MEV-Boost block builder bids
 ---
 
 ## Summary
@@ -8,19 +9,34 @@ Historical dataset of MEV-Boost block builder bids collected from known MEV-Boos
 
 ## Process
 
-We ETL data from MEV-Boost Relays from the endpoint `/bids`, store and make the data available in BigQuery. Our dataset contains public information provided by each relay from their API.
-* Relays: Flashbots, Eden, Ultrasound, Aestus, Agnostic, ...
-* We augment data to show if blocks have been re-orged
-* We augment block timestamp
+We ETL data from MEV-Boost Relays from the endpoint `/builder_blocks_received`, store and make the data available in BigQuery. Our dataset contains public information provided by each relay from their API.
+* Relays:
+  * Flashbots
+  * Eden Network
+  * Ultrasound
+  * Aestus
+  * Agnostic
+  * Manifold
+  * BloxrouteMaxProfit
+  * BloxrouteRegulated
+* We augment data to determine if blocks have been re-orged
+* We augment data with block timestamp
+* [MEV-Boost Relay Reference &nearr;](https://github.com/flashbots/mev-boost-relay/blob/98576112e245454a225e9a668cacfa498eea00b4/services/api/service.go#L71)
 
 ## BigQuery
 
 By making the data available in BigQuery, it can be queried and joined with other public datasets, like the Ethereum Blockchain dataset or simply exported.
 
-* Dataset: `eden-data-public.mev_boost`
-* Table: `eden-data-public.mev_boost.bids`
+* Dataset: `eden-data-public.mev_boost` [Open in BigQuery &nearr;](https://console.cloud.google.com/bigquery?p=eden-data-public&d=mev_boost&page=dataset)
+* Table: `eden-data-public.mev_boost.bids` [Open in BigQuery &nearr;](https://console.cloud.google.com/bigquery?p=eden-data-public&d=mev_boost&t=bids&page=table)
 * Update frequency: 60 mins
 * Partitioning: Daily
+
+:::info BigQuery Access
+
+You need to be logged into your Google Account with a Project selected
+
+:::
 
 ## Example Query
 
@@ -40,4 +56,5 @@ You should usually use a WHERE clause on partitioned data to save on query costs
 
 ## See Related
 
-* eden-data-public.mev_boost.payloads
+* [`eden-data-public.mev_boost.payloads`](./payloads)
+* [`eden-data-public.ethereum_auxiliary.tags_pubkey`](../ethereum-auxiliary/tags-pubkey)
