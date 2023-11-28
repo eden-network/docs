@@ -47,6 +47,17 @@ module.exports = {
       ]
     },
     {
+      'Public Data': [
+        { type: 'doc', id: 'public-data/overview', label: 'Overview'},
+        { type: 'doc', id: 'public-data/mev-boost/bids', label: 'MEV-Boost Bids'},
+        { type: 'doc', id: 'public-data/mev-boost/payloads', label: 'MEV-Boost Payloads'},
+        { type: 'doc', id: 'public-data/flashbots/mempool-dumpster', label: 'Flashbots Mempool Dumpster'},
+        { type: 'doc', id: 'public-data/flashbots/mev-share', label: 'Flashbots MEV-Share'},
+        { type: 'doc', id: 'public-data/gnosis/mev-blocker', label: 'Gnosis MEV Blocker'},
+        { type: 'doc', id: 'public-data/ethereum-auxiliary/tags-pubkey', label: 'Ethereum Tags by Pubkey'},
+      ]
+    },
+    {
       'Account Abstraction': [
         { type: 'doc', id: 'eden-bundler/overview', label: 'Eden Bundler'},
         'eden-bundler/erc4337-overview'

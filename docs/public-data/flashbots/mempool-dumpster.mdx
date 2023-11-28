@@ -1,0 +1,48 @@
+---
+title: Flashbots Mempool Dumpster
+description: Public dataset of mempool dumpster transactions
+---
+
+## Summary
+
+Historical dataset of mempool dumpster transactions.
+
+## Process
+
+We ETL data from the [mempool dumpster &nearr;](https://github.com/flashbots/mempool-dumpster), store and make the data available in BigQuery. Our dataset contains public information provided by the mempool dumpster.
+
+## BigQuery
+
+By making the data available in BigQuery, it can be queried and joined with other public datasets, like the Ethereum Blockchain dataset or simply exported.
+
+* Dataset: `eden-data-public.flashbots` [Open in BigQuery &nearr;](https://console.cloud.google.com/bigquery?p=eden-data-public&d=flashbots&page=dataset)
+* Table: `eden-data-public.flashbots.mempool_dumpster` [Open in BigQuery &nearr;](https://console.cloud.google.com/bigquery?p=eden-data-public&d=flashbots&t=mempool_dumpster&page=table)
+* Update frequency: 24 hours
+* Partitioning: Daily
+
+:::info BigQuery Access
+
+You need to be logged into your Google Account with a Project selected
+
+:::
+
+## Example Query
+
+You can get started with the example query below.
+
+```sql
+SELECT *
+FROM `eden-data-public.flashbots.mempool_dumpster` 
+WHERE DATE(block_timestamp) = CURRENT_DATE()
+```
+
+:::tip Working with Partioned Tables
+
+You should usually use a WHERE clause on partitioned data to save on query costs. [Learn more](https://cloud.google.com/bigquery/docs/partitioned-tables)
+
+:::
+
+## See Related
+
+* [`eden-data-public.flashbots.mev_share`](./mev-share)
+* [`eden-data-public.gnosis.mev_blocker`](../gnosis/mev-blocker)

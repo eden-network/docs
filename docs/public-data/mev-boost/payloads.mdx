@@ -1,0 +1,57 @@
+---
+title: MEV-Boost Payloads
+description: Public dataset of MEV-Boost block payloads delivered
+---
+
+## Summary
+
+Historical dataset of MEV-Boost block payloads delivered collected from known MEV-Boost relays.
+
+## Process
+
+We ETL data from MEV-Boost Relays from the endpoint `/proposer_payload_delivered`, store and make the data available in BigQuery. Our dataset contains public information provided by each relay from their API.
+* Relays:
+  * Flashbots
+  * Eden Network
+  * Ultrasound
+  * Aestus
+  * Agnostic
+  * Manifold
+  * BloxrouteMaxProfit
+  * BloxrouteRegulated
+* [MEV-Boost Relay Reference &nearr;](https://github.com/flashbots/mev-boost-relay/blob/98576112e245454a225e9a668cacfa498eea00b4/services/api/service.go#L70)
+
+## BigQuery
+
+By making the data available in BigQuery, it can be queried and joined with other public datasets, like the Ethereum Blockchain dataset or simply exported.
+
+* Dataset: `eden-data-public.mev_boost` [Open in BigQuery &nearr;](https://console.cloud.google.com/bigquery?p=eden-data-public&d=mev_boost&t=bids&page=dataset)
+* Table: `eden-data-public.mev_boost.payloads` [Open in BigQuery &nearr;](https://console.cloud.google.com/bigquery?p=eden-data-public&d=mev_boost&t=payloads&page=table)
+* Update frequency: 60 mins
+* Partitioning: Daily
+
+:::info BigQuery Access
+
+You need to be logged into your Google Account with a Project selected
+
+:::
+
+## Example Query
+
+```sql
+SELECT *
+FROM `eden-data-public.mev_boost.payloads` 
+WHERE DATE(block_timestamp) = CURRENT_DATE()
+
+```
+
+:::tip Working with Partioned Tables
+
+You should usually use a WHERE clause on partitioned data to save on query costs. [Learn more](https://cloud.google.com/bigquery/docs/partitioned-tables)
+
+:::
+
+## See Related
+
+* [`eden-data-public.mev_boost.bids`](./bids)
+* [`eden-data-public.ethereum_auxiliary.tags_pubkey`](../ethereum-auxiliary/tags-pubkey)

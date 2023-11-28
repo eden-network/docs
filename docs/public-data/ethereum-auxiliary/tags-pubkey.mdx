@@ -1,0 +1,41 @@
+---
+title: Ethereum Tags by Pubkey
+description: Public dataset of tags by pubkey
+---
+
+## Summary
+
+Tags by pubkey for Ethereum
+
+## Process
+
+We collect data from various sources about pubkey claims to ownership, store and make the data available in BigQuery.
+
+## BigQuery
+
+By making the data available in BigQuery, it can be queried and joined with other public datasets, like the Ethereum Blockchain dataset or simply exported.
+
+* Dataset: `eden-data-public.ethereum_auxiliary` [Open in BigQuery &nearr;](https://console.cloud.google.com/bigquery?p=eden-data-public&d=ethereum_auxiliary&page=dataset)
+* Table: `eden-data-public.ethereum_auxiliary.tags_pubkey` [Open in BigQuery &nearr;](https://console.cloud.google.com/bigquery?p=eden-data-public&d=ethereum_auxiliary&t=tags_pubkey&page=table)
+* Update frequency: Manual updates
+* Partitioning: none
+
+:::info BigQuery Access
+
+You need to be logged into your Google Account with a Project selected
+
+:::
+
+## Example Query
+
+You can get started with the example query below.
+
+```sql
+SELECT *
+FROM `eden-data-public.ethereum_auxiliary.tags_pubkey` 
+```
+
+## See Related
+
+* [`eden-data-public.mev_boost.bids`](../mev-boost/bids)
+* [`eden-data-public.mev_boost.payloads`](../mev-boost/payloads)
