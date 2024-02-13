@@ -1,0 +1,116 @@
+---
+title: 0xProtect
+description: Open Source Solution for Ethereum Transaction Filtering
+---
+
+As regulation becomes increasingly prevalent in crypto and DeFi, the need for transparent, common tooling to streamline compliance among ecosystem stakeholders grows. To address this, we introduce 0xProtect: a tool designed as a repository for OFAC SDN (Specially Designated Nationals) data, facilitating transparent compliance coordination.
+
+## Data Sources
+
+0xProtect, primarily serving block production participants (such as searchers, validators, block builders, and relays), employs a smart contract to keep an on-chain copy of OFAC's sanction list. This grants users permissionless access to the always-updated list, aiding in compliance with block production regulations.
+
+  * [Smart Contract](https://etherscan.io/address/0x97044531D0fD5B84438499A49629488105Dc58e6)
+
+Besides the smart contract, the sanctions list is also available in 2 other representations: a BigQuery table and JSON blob, facilitating other use cases such as compliance reporting and data analysis.
+
+  * [0xProtect API](https://blacklist-api-vvhrqyzuiq-uc.a.run.app/blacklist)
+  * [BigQuery](https://console.cloud.google.com/bigquery?p=zerox-protect&d=public&t=blacklist&page=table)
+
+## Transparent Registry
+
+We recognize that adherence to OFAC guidelines may not be a priority for all ecosystem participants. Our goal with 0xProtect is not to advocate or enforce compliance but to offer a transparent registry that informs our decisions on including or excluding certain transactions, bundles, and blocks. This registry can assist stakeholders in conducting due diligence according to their operational requirements.
+
+0xProtect represents a pioneering effort in making transaction filtering requirements transparent and accessible through a smart contract. We've made the code open-source, encouraging transparency and community-driven enhancements.
+
+  * [Smart Contract](https://github.com/0xprotect/sanctions-list)
+  * [Sanctions List Service](https://github.com/0xprotect/sanctions-list-service)
+
+## How it Works
+
+OFAC maintains the SDN sanctions lists, accessible on their website. The process of adding or removing Ethereum addresses is at OFAC's discretion. To keep our representations current, we've developed a service (SLS) that checks OFAC's URLs hourly. Each data retrieval is verified against OFAC’s checksum page to ensure accuracy. After verification, Ethereum addresses are organized, deduplicated, and hashed to create a snapshot. This hash is compared with our representations (smart contract, BigQuery table and JSON blob), and any discrepancies lead to updates on said representations. 
+
+## Staying Updated
+
+
+### Using the Smart Contract
+
+End users of the smart contract can monitor synchronization events (see below) to stay informed about address additions or removals. The contract's logs also provide a continuous record of OFAC's modifications to the sanctions list.
+
+The events of interest are as follows:
+
+```solidity
+/// @notice Event emitted when an address is added to the blacklist
+event Blacklisted(address indexed _account);
+
+/// @notice Event emitted when an address is removed from the blacklist
+event UnBlacklisted(address indexed _account);
+```
+
+### Using BigQuery
+
+For data analysts, having the blacklist in BigQuery enables the cross-referencing of public execution layer data, offering insights into the inclusion of sanctioned addresses by builders or in blocks.
+
+Our example view demonstrates how to identify sanctioned addresses in transactions, including their token transfers or traces.
+
+For reference, here is an example query to show matches on `from_address` and `to_address` at the transaction level:
+
+```sql
+select  coalesce(b.name, bt.coinbase) as builder,
+        bt.block_hash,
+        bt.block_number,
+        bt.block_timestamp,
+        bt.`hash` as transaction_hash,
+        bt.coinbase,
+        from_address,        
+        fa.address is not null as from_match,
+        to_address,
+        ta.address is not null as to_match
+from `zerox-protect.public.transactions` bt
+left join `zerox-protect.public.builders` b on b.address = bt.coinbase
+left join `zerox-protect.public.blacklist` fa on fa.address = from_address
+left join `zerox-protect.public.blacklist` ta on ta.address = to_address
+where block_timestamp > timestamp_sub(current_timestamp(), interval 7 day)
+order by block_timestamp desc;
+```
+
+### Using the API
+
+For users that just want the updated blacklist as a json blob, just query the `/blacklist` endpoint. Here is an example javascript call to the api:
+
+```js
+const apiUrl = 'https://blacklist-api-vvhrqyzuiq-uc.a.run.app/blacklist';
+
+fetch(apiUrl)
+    .then(response => {
+    	if (!response.ok) {
+            throw new Error('Network response error');
+        }
+   	    return response.json();
+    })
+    .then(data => {
+        console.log('API Response:', data);
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+```
+
+The response:
+
+```js
+[
+    "0x01e2919679362dfbc9ee1644ba9c6da6d6245bb1",
+    "0x03893a7c7463ae47d46bc7f091665f1893656003",
+    "0x04dba1194ee10112fe6c3207c0687def0e78bacf",
+    "0x05e0b5b40b7b66098c2161a5ee11c5740a3a7c45",
+    "0x07687e702b410fa43f4cb4af7fa097918ffd2730",
+    "0x0836222f2b2b24a3f36f98668ed8f0b38d1a872f",
+    "..."
+]
+```
+
+## Disclaimer
+
+This tool has not undergone third-party auditing. Any party that chooses to interact with it does so at their own risk and discretion.
+
+Eden Network does not provide any warranties or guarantees regarding the use of this tool and declines any liability or responsibility that may result from non-compliance by the user.
