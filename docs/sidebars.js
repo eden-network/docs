@@ -58,6 +58,11 @@ module.exports = {
       ]
     },
     {
+      'Transaction Filtering': [
+        { type: 'doc', id: 'transaction-filtering/overview', label: 'Overview'},
+      ]
+    },
+    {
       'Account Abstraction': [
         { type: 'doc', id: 'eden-bundler/overview', label: 'Eden Bundler'},
         'eden-bundler/erc4337-overview'
